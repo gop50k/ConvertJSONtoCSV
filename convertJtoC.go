@@ -17,7 +17,7 @@ type Information struct {
 
 func main() {
 	// JSONファイル読み込み
-	bytes, err := ioutil.ReadFile("/Users/nakagawago/ConvertJSONtoCSV/input.json")
+	bytes, err := ioutil.ReadFile("./input.json")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -29,7 +29,7 @@ func main() {
 	}
 
 	//CSVファイル作成
-	file, err := os.OpenFile("/Users/nakagawago/ConvertJSONtoCSV/output.csv", os.O_WRONLY|os.O_CREATE, 0600)
+	file, err := os.OpenFile("./output.csv", os.O_WRONLY|os.O_CREATE, 0600)
 	if err != nil {
 		log.Println(err)
 	}
