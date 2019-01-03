@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -18,7 +17,7 @@ type Information struct {
 
 func main() {
 	// JSONファイル読み込み
-	bytes, err := ioutil.ReadFile("/Users/nakagawago/Desktop/convertJtoC/input.json")
+	bytes, err := ioutil.ReadFile("/Users/nakagawago/ConvertJSONtoCSV/input.json")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -29,21 +28,21 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println("id, subject, start_at")
-	// デコードしたデータを表示
-	for _, i := range Informations {
-		fmt.Printf("%d, %s, %s\n", i.ID, i.Subject, i.StartAt)
-	}
-
-	//書き込みファイル作成
-	file, err := os.Create("/Users/nakagawago/Desktop/convertJtoC/output.csv")
+	//CSVファイル作成
+	file, err := os.OpenFile("/Users/nakagawago/ConvertJSONtoCSV/output.csv", os.O_WRONLY|os.O_CREATE, 0600)
 	if err != nil {
 		log.Println(err)
 	}
 	defer file.Close()
 
-	writer := csv.NewWriter(file)
-	writer.Write(Informations)
-	writer.Flush()
+	// ヘッダーテキストを書き込む
+	_, err = file.WriteString("id, subject, start_at\n")
+	if err != nil {
+		log.Println(err)
+	}
 
+	// デコードしたデータを表示
+	for _, info := range Informations {
+		fmt.Fprintln(file, info.ID, ",", info.Subject, ",", info.StartAt)
+	}
 }
