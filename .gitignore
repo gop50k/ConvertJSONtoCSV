@@ -1,0 +1,2 @@
+### output.csvをGit管理外にする ###
+*.output.csv
