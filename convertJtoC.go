@@ -54,9 +54,23 @@ func main() {
 	// Structのjsonタグを取得
 	s := Information{}
 	t := reflect.TypeOf(s)
+	lenInfo := []string{}
+
 	for i := 0; i < t.NumField(); i++ {
 		field := t.Field(i)
-		fmt.Println(field.Tag.Get("json"))
+		j := field.Tag.Get("json")
+
+		a := t.NumField()
+		b := a - 1
+
+		if i < b {
+			// 最後のフィールドでない場合
+			lenInfo = append(lenInfo, j, ",")
+		} else if i == b {
+			// 最後のフィールドである場合
+			lenInfo = append(lenInfo, j)
+
+		}
 	}
 
 	// JSONファイル読み込み
@@ -86,7 +100,12 @@ func main() {
 	// mapに変換したJSONのキーを取得して出力する
 
 	// ヘッダーテキストを書き込む
-	_, err = file.WriteString("id, subject, start_at\n")
+	// type header string = lenInfo
+
+	// このlenInfoが今配列なので文字列にして下のWriteStringに入れる！！
+	fmt.Println(lenInfo)
+
+	_, err = file.WriteString("ここに文字列としてヘッダーが来る")
 	if err != nil {
 		log.Println(err)
 	}
@@ -112,3 +131,4 @@ func main() {
 
 // 実行コマンドショートカット
 // go run Users/nakagawago/ConvertJSONtoCSV/convertJtoC.go
+// go run convertJtoC.go
