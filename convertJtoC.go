@@ -23,7 +23,7 @@ func main() {
 	}
 
 	// JSONデコード
-	var Informations []Information
+	Informations := []Information{}
 	if err := json.Unmarshal(bytes, &Informations); err != nil {
 		log.Fatal(err)
 	}
@@ -35,6 +35,10 @@ func main() {
 	}
 	defer file.Close()
 
+	// Structをmapに変換する
+
+	// mapに変換したJSONのキーを取得して出力する
+
 	// ヘッダーテキストを書き込む
 	_, err = file.WriteString("id, subject, start_at\n")
 	if err != nil {
@@ -45,4 +49,5 @@ func main() {
 	for _, info := range Informations {
 		fmt.Fprintln(file, info.ID, ",", info.Subject, ",", info.StartAt)
 	}
+	fmt.Println("処理終了")
 }
