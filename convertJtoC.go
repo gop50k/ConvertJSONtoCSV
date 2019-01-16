@@ -111,4 +111,4 @@ func main() {
 //   fmt.Println(c)
 
 // 実行コマンドショートカット
-// go run convertJtoC.go
+// go run Users/nakagawago/ConvertJSONtoCSV/convertJtoC.go
